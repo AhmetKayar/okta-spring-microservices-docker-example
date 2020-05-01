@@ -51,4 +51,4 @@ services:
 # Networks to be created to facilitate communication between containers
 networks:
   local_proxy:
-    external: true
+    driver: overlay
