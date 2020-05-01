@@ -1,0 +1,50 @@
+version: '3'
+services:
+  discovery:
+    image: developer.okta.com/microservice-docker-discovery:0.0.1-SNAPSHOT
+    networks: # Networks to join (Services on the same network can communicate with each other using their name)
+      - local_proxy
+    ports:
+      - 8761:8761
+  config:
+    image: developer.okta.com/microservice-docker-config:0.0.1-SNAPSHOT
+    networks: # Networks to join (Services on the same network can communicate with each other using their name)
+      - local_proxy
+    volumes:
+      - ./config-data:/var/config-data
+    environment:
+      - JAVA_OPTS=
+        -DEUREKA_SERVER=http://discovery:8761/eureka
+        -Dspring.cloud.config.server.native.searchLocations=/var/config-data
+    depends_on:
+      - discovery
+    ports:
+      - 8888:8888
+  school-service:
+    image: developer.okta.com/microservice-docker-school-service:0.0.1-SNAPSHOT
+    networks: # Networks to join (Services on the same network can communicate with each other using their name)
+      - local_proxy
+    environment:
+      - JAVA_OPTS=
+        -DEUREKA_SERVER=http://discovery:8761/eureka
+    depends_on:
+      - discovery
+      - config
+  school-ui:
+    image: developer.okta.com/microservice-docker-school-ui:0.0.1-SNAPSHOT
+    networks: # Networks to join (Services on the same network can communicate with each other using their name)
+      - local_proxy
+    environment:
+      - JAVA_OPTS=
+        -DEUREKA_SERVER=http://discovery:8761/eureka
+        -Dspring.profiles.active=production
+    restart: on-failure
+    depends_on:
+      - discovery
+      - config
+    ports:
+      - 8080:8080
+# Networks to be created to facilitate communication between containers
+networks:
+  local_proxy:
+    external: true
