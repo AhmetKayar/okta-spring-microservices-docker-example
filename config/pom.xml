@@ -10,13 +10,14 @@
 	</parent>
 	<groupId>com.okta.developer.docker_microservices</groupId>
 	<artifactId>config</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>config</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
 		<java.version>1.8</java.version>
 		<spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
+		<docker.image.prefix>docker.io/ahmetkayar</docker.image.prefix>
 	</properties>
 
 	<dependencies>
@@ -68,8 +69,9 @@
 					</execution>
 				</executions>
 				<configuration>
-					<repository>developer.okta.com/microservice-docker-${project.artifactId}</repository>
+					<repository>${docker.image.prefix}/${project.artifactId}</repository>
 					<tag>${project.version}</tag>
+					<useMavenSettingsForAuth>true</useMavenSettingsForAuth>
 					<buildArgs>
 						<JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
 					</buildArgs>

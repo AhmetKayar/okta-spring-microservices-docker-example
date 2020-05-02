@@ -1,17 +1,13 @@
 version: '3'
 services:
-  parent-pom:
-    build:
-      context: .
-      dockerfile: Dockerfile
   discovery:
-    image: developer.okta.com/microservice-docker-discovery:0.0.1-SNAPSHOT
+    image: ahmetkayar/discovery:0.0.1-SNAPSHOT
     networks: # Networks to join (Services on the same network can communicate with each other using their name)
       - local_proxy
     ports:
       - 8761:8761
   config:
-    image: developer.okta.com/microservice-docker-config:0.0.1-SNAPSHOT
+    image: ahmetkayar/config:0.0.2-SNAPSHOT
     networks: # Networks to join (Services on the same network can communicate with each other using their name)
       - local_proxy
     volumes:
@@ -25,7 +21,7 @@ services:
     ports:
       - 8888:8888
   school-service:
-    image: developer.okta.com/microservice-docker-school-service:0.0.1-SNAPSHOT
+    image: ahmetkayar/school-service:0.0.1-SNAPSHOT
     networks: # Networks to join (Services on the same network can communicate with each other using their name)
       - local_proxy
     environment:
@@ -35,7 +31,7 @@ services:
       - discovery
       - config
   school-ui:
-    image: developer.okta.com/microservice-docker-school-ui:0.0.1-SNAPSHOT
+    image: ahmetkayar/school-ui:0.0.1-SNAPSHOT
     networks: # Networks to join (Services on the same network can communicate with each other using their name)
       - local_proxy
     environment:
