@@ -29,22 +29,22 @@ pipeline {
               def imageResponse = httpRequest httpMode: 'POST', ignoreSslErrors: true, url: repoURL, validResponseCodes: '200', customHeaders:[[name:"Authorization", value: env.JWTTOKEN ], [name: "cache-control", value: "no-cache"]]
 
               echo "Config"
-              def repoURL = """
+              repoURL = """
                 https://portainer.turkiyeoku.com/api/endpoints/1/docker/build?t=ms-config:v1&remote=https://$GITHUB_USERNAME:$GITHUB_PASSWORD@github.com/$GITHUB_USERNAME/okta-spring-microservices-docker-example.git&dockerfile=config/Dockerfile&nocache=true
               """
-              def imageResponse = httpRequest httpMode: 'POST', ignoreSslErrors: true, url: repoURL, validResponseCodes: '200', customHeaders:[[name:"Authorization", value: env.JWTTOKEN ], [name: "cache-control", value: "no-cache"]]
+              imageResponse = httpRequest httpMode: 'POST', ignoreSslErrors: true, url: repoURL, validResponseCodes: '200', customHeaders:[[name:"Authorization", value: env.JWTTOKEN ], [name: "cache-control", value: "no-cache"]]
 
               echo "School-service"
-              def repoURL = """
+              repoURL = """
                 https://portainer.turkiyeoku.com/api/endpoints/1/docker/build?t=ms-school-service:v1&remote=https://$GITHUB_USERNAME:$GITHUB_PASSWORD@github.com/$GITHUB_USERNAME/okta-spring-microservices-docker-example.git&dockerfile=school-service/Dockerfile&nocache=true
               """
-              def imageResponse = httpRequest httpMode: 'POST', ignoreSslErrors: true, url: repoURL, validResponseCodes: '200', customHeaders:[[name:"Authorization", value: env.JWTTOKEN ], [name: "cache-control", value: "no-cache"]]
+              imageResponse = httpRequest httpMode: 'POST', ignoreSslErrors: true, url: repoURL, validResponseCodes: '200', customHeaders:[[name:"Authorization", value: env.JWTTOKEN ], [name: "cache-control", value: "no-cache"]]
 
               echo "school-ui"
-              def repoURL = """
+              repoURL = """
                 https://portainer.turkiyeoku.com/api/endpoints/1/docker/build?t=ms-school-ui:v1&remote=https://$GITHUB_USERNAME:$GITHUB_PASSWORD@github.com/$GITHUB_USERNAME/okta-spring-microservices-docker-example.git&dockerfile=school-ui/Dockerfile&nocache=true
               """
-              def imageResponse = httpRequest httpMode: 'POST', ignoreSslErrors: true, url: repoURL, validResponseCodes: '200', customHeaders:[[name:"Authorization", value: env.JWTTOKEN ], [name: "cache-control", value: "no-cache"]]
+              imageResponse = httpRequest httpMode: 'POST', ignoreSslErrors: true, url: repoURL, validResponseCodes: '200', customHeaders:[[name:"Authorization", value: env.JWTTOKEN ], [name: "cache-control", value: "no-cache"]]
 
           }
         }
