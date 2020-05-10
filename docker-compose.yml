@@ -1,15 +1,15 @@
 version: '3'
 services:
   discovery:
-    image: ahmetkayar/discovery:0.0.1-SNAPSHOT
+    image: ms-discovery:v1
     networks: # Networks to join (Services on the same network can communicate with each other using their name)
-      - local_proxy
+      - proxy
     ports:
       - 8761:8761
   config:
-    image: ahmetkayar/config:0.0.2-SNAPSHOT
+    image: ms-config:v1
     networks: # Networks to join (Services on the same network can communicate with each other using their name)
-      - local_proxy
+      - proxy
     volumes:
       - ./config-data:/var/config-data
     environment:
@@ -21,17 +21,19 @@ services:
     ports:
       - 8888:8888
   school-service:
-    image: ahmetkayar/school-service:0.0.1-SNAPSHOT
+    image: ms-school-service:v1
     networks: # Networks to join (Services on the same network can communicate with each other using their name)
-      - local_proxy
+      - proxy
     environment:
       - JAVA_OPTS=
         -DEUREKA_SERVER=http://discovery:8761/eureka
     depends_on:
       - discovery
       - config
+    ports:
+      - 9000-9005:9000
   school-ui:
-    image: ahmetkayar/school-ui:0.0.1-SNAPSHOT
+    image: ms-school-ui:v1
     networks: # Networks to join (Services on the same network can communicate with each other using their name)
       - local_proxy
     environment:
@@ -46,5 +48,5 @@ services:
       - 8080:8080
 # Networks to be created to facilitate communication between containers
 networks:
-  local_proxy:
+  proxy:
     driver: overlay
